@@ -1,39 +1,213 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-    <category label="32001">
-		<setting type="lsep"/>
-        <setting id="pvr" label="32002" type="bool" default="false"/>
-        <setting id="bookmark" label="32006" type="bool" default="false"/>
-        <setting id="autoclean" label="32003" type="bool" default="true"/>
-        <setting id="autobackup" label="32015" type="bool" default="true"/>
-        <setting id="backupname" label="32016" type="text" default="" enable="eq(-1,true)"/>
-        <setting id="promptdelete" label="32007" type="bool" default="true"/>
-    </category>
-		<category label="32004">
-		<setting type="lsep"/>
-        <setting id="logtolog" label="32025" type="bool" default="true"/>
-        <setting id="typeoflog" label="32026" type="enum" lvalues="32027|32028" default="" enabled="eq(-1,true)" visible="eq(-1,true)"/>
-        <setting id="debugging" label="32005" type="bool" default="false"/>
-    </category>
-    <category label="32010">
-		<setting type="lsep"/>
-		<setting id="usesources" label="32012" type="bool" default="true"/>
-		<setting id="localsource" label="32013" type="bool" default="true" enable="eq(-1,true)"/>
-		<setting label="32014" type="lsep"/>
-		<setting id="sourcefilepath" label="32011" type="file" default="" enable="eq(-3,true)+eq(-2,false)"/>
-    </category>
-    <category label="32029">
-		<setting type="lsep"/>
-		<setting id="specificpath" label="32020" type="bool" default="false" enable="eq(3,false)"/>
-		<setting id="spcpathstr" label="32021" type="text" default="" enable="eq(-1,true)"/>
-		<setting type="lsep"/>
-		<setting id="replacepath" label="32022" type="bool" default="false" enable="eq(-3,false)"/>
-		<setting id="oldpath" label="32023" type="text" default="" enable="eq(-1,true)"/>
-		<setting id="newpath" label="32024" type="text" default="" enable="eq(-2,true)"/>
-    </category>
-    <category label="32017">
-		<setting type="lsep"/>
-		<setting id="overridedb" label="32018" type="bool" default="false"/>
-		<setting id="forceddbname" label="32019" type="text" default="" enable="eq(-1,true)"/>
-    </category>
+<settings version="1">
+	<section id="script.database.cleaner">
+		<category help="" id="General Settings" label="32001">
+			<group id="1">
+				<!-- <setting id="pvr" label="32002" type="bool" default="false"/> -->
+				<setting help="" id="pvr" label="32002" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>				
+				<!-- <setting id="bookmark" label="32006" type="bool" default="false"/> -->
+				<setting help="" id="bookmark" label="32006" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="autoclean" label="32003" type="bool" default="true"/> -->
+				<setting help="" id="autoclean" label="32003" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="autobackup" label="32015" type="bool" default="true"/> -->
+				<setting help="" id="autobackup" label="32015" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="backupname" label="32016" type="text" default="" enable="eq(-1,true)"/> -->
+				<setting help="" id="backupname" label="32016" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" setting="autobackup">true</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32016</heading>
+					</control>
+				</setting>
+				<!-- <setting id="promptdelete" label="32007" type="bool" default="true"/> -->
+				<setting help="" id="promptdelete" label="32007" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category help="" id="debug and log settings" label="32004">
+			<group id="1">
+				<!-- <setting id="logtolog" label="32025" type="bool" default="true"/> -->
+				<setting help="" id="logtolog" label="32025" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="typeoflog" label="32026" type="enum" lvalues="32027|32028" default="" enabled="eq(-1,true)" visible="eq(-1,true)"/> -->
+				<setting id="typeoflog" type="integer" label="32026" help="">
+					<level>0</level>
+					<default>32027</default>
+					<constraints>
+						<options>
+							<option label="32027">0</option>
+							<option label="32028">1</option>
+						</options>
+					</constraints>
+					<dependencies>
+							<dependency type="enable" setting="logtolog">true</dependency>
+							<dependency type="visible" setting="logtolog">true</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				<!-- <setting id="debugging" label="32005" type="bool" default="false"/> -->
+				<setting help="" id="debugging" label="32005" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+		<category id="sources" label="32010">
+			<group id="1">
+				<!-- <setting id="usesources" label="32012" type="bool" default="true"/> -->
+				<setting help="" id="usesources" label="32012" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="localsource" label="32013" type="bool" default="true" enable="eq(-1,true)"/> -->
+				<setting help="" id="localsource" label="32013" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="enable" setting="usesources">true</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="2" label="32014">
+				<!-- <setting id="sourcefilepath" label="32011" type="file" default="" enable="eq(-3,true)+eq(-2,false)"/> -->
+				<setting id="sourcefilepath" type="path" label="32011" help="">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<writable>false</writable>
+					</constraints>
+					<dependencies>
+						<and>
+							<dependency type="enable" setting="usesources">true</dependency>
+							<dependency type="enable" setting="localsource">false</dependency>
+						</and>
+					</dependencies>
+					<control type="button" format="file">
+						<heading>32011</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="path manipulation" label="32029">
+			<group id="1">
+				<!-- <setting id="specificpath" label="32020" type="bool" default="false" enable="eq(3,false)"/> -->
+				<setting help="" id="specificpath" label="32020" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" setting="replacepath">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="spcpathstr" label="32021" type="text" default="" enable="eq(-1,true)"/> -->
+				<setting help="" id="spcpathstr" label="32021" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" setting="specificpath">true</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32021</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="2">
+				<!-- <setting id="replacepath" label="32022" type="bool" default="false" enable="eq(-3,false)"/> -->
+				<setting help="" id="replacepath" label="32022" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="enable" setting="localsource">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="oldpath" label="32023" type="text" default="" enable="eq(-1,true)"/> -->
+				<setting help="" id="oldpath" label="32023" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" setting="replacepath">true</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32023</heading>
+					</control>
+				</setting>
+				<!-- <setting id="newpath" label="32024" type="text" default="" enable="eq(-2,true)"/> -->
+				<setting help="" id="newpath" label="32024" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" setting="replacepath">true</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32024</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="advanced" label="32017">
+			<group id="1">
+				<!-- <setting id="overridedb" label="32018" type="bool" default="false"/> -->
+				<setting help="" id="overridedb" label="32018" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<!-- <setting id="forceddbname" label="32019" type="text" default="" enable="eq(-1,true)"/> -->
+				<setting help="" id="forceddbname" label="32019" type="string">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" setting="overridedb">true</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>32019</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+	</section>
 </settings>
