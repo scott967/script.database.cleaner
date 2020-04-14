@@ -174,14 +174,14 @@ class MyClass(xbmcgui.WindowXMLDialog):
 addon = xbmcaddon.Addon()
 addonname = addon.getAddonInfo('name')
 addonversion = addon.getAddonInfo('version')
-addonpath = addon.getAddonInfo('path').decode('utf-8')
+addonpath = addon.getAddonInfo('path')
 
-advanced_file = xbmc.translatePath('special://profile/advancedsettings.xml').decode('utf-8')
-sources_file = xbmc.translatePath('special://profile/sources.xml').decode('utf-8')
-excludes_file = xbmc.translatePath('special://profile/addon_data/script.database.cleaner/excludes.xml').decode('utf-8')
-db_path = xbmc.translatePath('special://database').decode('utf-8')
-userdata_path = xbmc.translatePath('special://userdata').decode('utf-8')
-bp_logfile_path = xbmc.translatePath('special://temp/bp-debuglog.log').decode('utf-8')
+advanced_file = xbmc.translatePath('special://profile/advancedsettings.xml')
+sources_file = xbmc.translatePath('special://profile/sources.xml')
+excludes_file = xbmc.translatePath('special://profile/addon_data/script.database.cleaner/excludes.xml')
+db_path = xbmc.translatePath('special://database')
+userdata_path = xbmc.translatePath('special://userdata')
+bp_logfile_path = xbmc.translatePath('special://temp/bp-debuglog.log')
 type_of_log =''
 is_pvr = addon.getSetting('pvr')
 autoclean = addon.getSetting('autoclean')
@@ -238,9 +238,8 @@ else:
 def log(txt):
 
     if isinstance(txt, str):
-        txt = txt.decode('utf-8')
-        message = u'%s: %s' % (addonname, txt)
-        xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
+        message = '%s: %s' % (addonname, txt)
+        xbmc.log(message, level=xbmc.LOGDEBUG)
 
 def dbglog(txt):
     if debugging:
@@ -251,8 +250,8 @@ def exit_on_error():
     exit(1)
 
 def cleaner_log_file(our_select, cleaning):
-    cleaner_log = xbmc.translatePath('special://temp/database-cleaner.log').decode('utf-8')
-    old_cleaner_log = xbmc.translatePath('special://temp/database-cleaner.old.log').decode('utf-8')
+    cleaner_log = xbmc.translatePath('special://temp/database-cleaner.log')
+    old_cleaner_log = xbmc.translatePath('special://temp/database-cleaner.old.log')
     old_log_contents =''
     do_progress = False
     if not enable_logging:
@@ -315,8 +314,8 @@ def cleaner_log_file(our_select, cleaning):
     if not specificpath and not replacepath:
         for strPath in my_data:
             counting +=1
-            mystring = u''.join(strPath) + '\n'
-            outdata = mystring.encode('utf-8')
+            mystring = ''.join(strPath) + '\n'
+            outdata = mystring
             if do_progress:
                 dialog.update(percent = int((counting / float(listsize)) * 100))
             if cleaning:
@@ -326,8 +325,8 @@ def cleaner_log_file(our_select, cleaning):
         dbglog('Removing specific path %s' % specific_path_to_remove)
         for strPath in my_data:
             counting +=1
-            mystring = u''.join(strPath) + '\n'
-            outdata = mystring.encode('utf-8')
+            mystring = ''.join(strPath) + '\n'
+            outdata = mystring
             if do_progress:
                 dialog.update(percent = int((counting / float(listsize)) * 100))
             if cleaning:
@@ -336,8 +335,8 @@ def cleaner_log_file(our_select, cleaning):
     else:
         for strPath in my_data:
             counting +=1
-            mystring = u''.join(strPath) + '\n'
-            outdata = mystring.encode('utf-8')
+            mystring = ''.join(strPath) + '\n'
+            outdata = mystring
             if do_progress:
                 dialog.update(percent = int((counting / float(listsize)) * 100))
             if cleaning:
@@ -368,7 +367,7 @@ if xbmcvfs.exists(advanced_file):
     found = True
 
 if found:
-    msg = advanced_file.encode('utf-8')
+    msg = advanced_file
     dbglog('looking in advancedsettings for videodatabase info')
     try:
         advancedsettings = ET.parse(advanced_file)
@@ -540,7 +539,7 @@ elif not is_mysql and not forcedbname:
     try:
         my_db_connector = db_path + our_dbname + '.db'
         db = sqlite3.connect(my_db_connector)
-    except Exception,e:
+    except Exception as e:
         s = str(e)
         xbmcgui.Dialog().ok(addonname, 'Error connecting to SQLite database', s)
         log('Error connecting to SQLite database - %s' % s)
@@ -698,7 +697,7 @@ else:
 if i:
     if autobackup == 'true' and not is_mysql:
         backup_path = xbmc.translatePath('special://database/backups/'
-            ).decode('utf-8')
+            )
 
         if not xbmcvfs.exists(backup_path):
             dbglog('Creating backup path %s' % backup_path)
@@ -798,9 +797,8 @@ if i:
         json_query = \
             xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "VideoLibrary.Clean","id": 1 }'
                                 )
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_query = jsoninterface.loads(json_query)
-        if json_query.has_key('result'):
+        if 'result' in json_query:
             dbglog('Clean library sucessfully called')
     else:
         xbmcgui.Dialog().ok(addonname,
