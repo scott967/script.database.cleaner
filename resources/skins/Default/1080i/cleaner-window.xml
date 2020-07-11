@@ -40,7 +40,7 @@
 				<texture>summary-title.png</texture>
 			</control>
 		</control>	
-		
+
 		<control type="textbox">
 			<description>Label for sources.xml list</description>
 			<left>220</left>
@@ -51,9 +51,9 @@
 			<align>left</align>
 			<label>[COLOR=FFFF00FF]Keeping Data From The Following Paths[/COLOR]</label>
 		</control>
-		
+
 		<!-- Scrollbar for sources.xml list -->
-		
+
 		<control type="scrollbar" id="17">
 			<description>Scroll bar control for paths list</description>
 			<left>155</left>
@@ -66,7 +66,7 @@
 			<texturesliderbarfocus border="1,14,1,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
 			<textureslidernib>ScrollBarNib.png</textureslidernib>
 			<textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
-			<pulseonselect></pulseonselect>
+			<pulseonselect/>
 			<orientation>vertical</orientation>
 			<showonepage>false</showonepage>
 			<onup>17</onup>
@@ -74,7 +74,7 @@
 			<onleft>1</onleft>
 			<onright>1</onright>
 		</control>
-	
+
 		<!-- List control for sources.xml paths -->
 
 		<control type="list" id="6">	
@@ -116,9 +116,9 @@
 				</control>
 			</focusedlayout>
 		</control>
-		
+
 		<!-- Title for excludes.xml listbox -->
-		
+
 		<control type="textbox">
 			<description>Label for excludes.xml list</description>
 			<left>1080</left>
@@ -128,9 +128,9 @@
 			<font>font10</font>
 			<label>[COLOR=FFFF00FF]Contents of 'excludes.xml'[/COLOR]</label>
 		</control>
-		
+
 		<!-- List control for excludes.xml -->
-		
+
 		<control type="list" id="8">	
 			<viewtype label="list_2">list</viewtype>
 			<left>1080</left>
@@ -156,7 +156,6 @@
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
 				</control>
-				
 			</itemlayout>
 			<focusedlayout height="30">
 				<control type="label">
@@ -168,10 +167,8 @@
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
 				</control>
-				
 			</focusedlayout>
 		</control>
-		
 		<control type="textbox">
 			<description>Label for addon settings list</description>
 			<left>1080</left>
@@ -183,10 +180,10 @@
 			<align>left</align>
 			<label>[COLOR=FFFF00FF]Addon Settings[/COLOR]</label>
 		</control>
-		
+
 		<!-- List control for Addon Settings -->
-		
-				<control type="list" id="10">	
+
+		<control type="list" id="10">	
 			<viewtype label="list_3">list</viewtype>
 			<left>1080</left>
 			<top>380</top>
@@ -211,7 +208,6 @@
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
 				</control>
-				
 			</itemlayout>
 			<focusedlayout height="30">
 				<control type="label">
@@ -223,12 +219,11 @@
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
 				</control>
-				
 			</focusedlayout>
 		</control>
-		
+
 		<!-- Warnings -->
-		
+
 		<control type="label" id="20">
 			<left>200</left>
 			<top>800</top>
@@ -238,7 +233,7 @@
 			<aligny>center</aligny>
 			<label>-</label>
 		</control>
-		
+
 		<control type="label" id="21">
 			<left>200</left>
 			<top>830</top>
@@ -248,9 +243,9 @@
 			<aligny>center</aligny>
 			<label>-</label>
 		</control>
-		
+
 		<!--  Clean and Abort Buttons -->
-		
+
 		<control type="button" id="1">
 			<description>Abort button</description>
 			<top>950</top>

@@ -273,9 +273,8 @@ def cleaner_log_file(our_select, cleaning):
                 dbglog('database-cleaner.log exists - backing up to old.log')
                 xbmcvfs.delete(old_cleaner_log)
                 xbmcvfs.copy(cleaner_log, old_cleaner_log)
-        old_log= xbmcvfs.File(cleaner_log)
-        old_log_contents=old_log.read()
-        old_log.close()
+        with xbmcvfs.File(cleaner_log) as old_log:
+            old_log_contents=old_log.read()
 
     now = datetime.datetime.now()
     logfile=xbmcvfs.File(cleaner_log, 'w')
